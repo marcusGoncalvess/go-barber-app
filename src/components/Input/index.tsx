@@ -8,7 +8,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react';
-import { TextInputProps } from 'react-native';
+import { TextInputProps, Text } from 'react-native';
 import { useField } from '@unform/core';
 
 import { Container, TextInput, Icon } from './styles';
@@ -70,7 +70,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
     });
   }, [fieldName, registerField]);
   return (
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} isErrored={!!error}>
       <Icon
         name={icon}
         size={20}
@@ -88,6 +88,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         }}
         {...rest}
       />
+      <Text>{error && error}</Text>
     </Container>
   );
 };
