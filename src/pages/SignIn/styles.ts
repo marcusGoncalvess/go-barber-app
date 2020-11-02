@@ -1,6 +1,10 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { Platform } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
+
+interface CreateAccountButtonProps {
+  hidden: boolean;
+}
 
 export const Container = styled.View`
   flex: 1;
@@ -26,7 +30,9 @@ export const ForgotPasswordText = styled.Text`
   font-family: 'RobotoSlab-Regular';
 `;
 
-export const CreateAccountButton = styled.TouchableOpacity`
+export const CreateAccountButton = styled.TouchableOpacity<
+  CreateAccountButtonProps
+>`
   position: absolute;
   left: 0;
   bottom: 0;
@@ -39,6 +45,12 @@ export const CreateAccountButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+
+  ${props =>
+    props.hidden &&
+    css`
+      transform: scale(0);
+    `}
 `;
 
 export const CreateAccountButtonText = styled.Text`

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   Alert,
+  Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -79,6 +80,24 @@ const SignIn: React.FC = () => {
     [signIn],
   );
 
+  const [isHide, setIsHide] = useState(false);
+
+  const hideCreateAccountButton = useCallback(() => {
+    setIsHide(true);
+  }, []);
+
+  const showCreateAccountButton = useCallback(() => {
+    setIsHide(false);
+  }, []);
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', hideCreateAccountButton);
+    Keyboard.addListener('keyboardDidHide', showCreateAccountButton);
+
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', hideCreateAccountButton);
+      Keyboard.removeListener('keyboardDidHide', showCreateAccountButton);
+    };
+  }, [hideCreateAccountButton, showCreateAccountButton]);
   return (
     <>
       <KeyboardAvoidingView
@@ -141,7 +160,10 @@ const SignIn: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
+      <CreateAccountButton
+        hidden={isHide}
+        onPress={() => navigation.navigate('SignUp')}
+      >
         <Icon name="log-in" size={20} color="#ff9000" />
         <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
       </CreateAccountButton>
