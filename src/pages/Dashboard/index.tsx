@@ -78,7 +78,7 @@ const Dashboard: React.FC = () => {
             <ProviderInfo>
               <ProviderName>{provider.name}</ProviderName>
               <ProviderMeta>
-                <Icon name="calender" size={14} color="#ff9000" />
+                <Icon name="calendar" size={14} color="#ff9000" />
                 <ProviderMetaText>Segunda à sexta</ProviderMetaText>
               </ProviderMeta>
 
